@@ -148,7 +148,19 @@ addresolvconf ()
   fi
 }
 addresolvconf
-exec proot --link2symlink -0 -r \${PREFIX}/share/TermuxAlpine/ -b /dev/ -b /sys/ -b /proc/ -b /sdcard -b /storage -b \$HOME -w /home /usr/bin/env TMPDIR=/tmp HOME=/home PREFIX=/usr SHELL=/bin/sh TERM="\$TERM" LANG=\$LANG PATH=/bin:/usr/bin:/sbin:/usr/sbin /bin/sh --login
+exec proot --link2symlink 
+-0 
+-R \${PREFIX}/share/TermuxAlpine/ 
+-b /sdcard 
+-b /storage 
+-w /home /usr/bin/env 
+TMPDIR=/tmp 
+HOME=/home 
+PREFIX=/usr 
+SHELL=/bin/bash 
+TERM="\$TERM" 
+LANG=\$LANG 
+PATH=/bin:/usr/bin:/sbin:/usr/sbin /bin/bash --login
 EOM
 
 	chmod 700 $bin
@@ -157,7 +169,7 @@ EOM
 # Utility function to touchup Alpine
 
 finalwork() {
-	[ ! -e ${DESTINATION}/finaltouchup.sh ] && curl --silent -LO https://raw.githubusercontent.com/Hax4us/TermuxAlpine/master/finaltouchup.sh
+	[ ! -e ${DESTINATION}/finaltouchup.sh ] && curl --silent -LO https://raw.githubusercontent.com/rodoviario/TermuxAlpine/master/finaltouchup.sh
 	if [ "${MOTD}" = "ON" ]; then
 		bash ${DESTINATION}/finaltouchup.sh --add-motd
 	else
